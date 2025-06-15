@@ -1,0 +1,150 @@
+:root {
+    --bubble-color: rgb(211, 219, 139);
+    --bubble-highlight: rgba(178, 213, 238, 0.5);
+    --text-color: #e1ede5; /* Example text color */
+    --text-shadow: rgba(0, 0, 0, 0.5);
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 15rem;
+    height: 100%;
+    font-family: 'Ubuntu', sans-serif;
+    background-image: url("/images/background.webp");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 0;
+	  padding: 0;
+	  overflow-x: hidden;
+    overflow-y: hidden;
+    box-sizing: border-box;
+    background-blend-mode: lighten;
+}
+
+.star-sparkle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  color: navy;
+  font-size: 16px;
+  pointer-events: none;
+  animation: star-fade 0.7s ease-out;
+  z-index: 9999;
+  -webkit-text-stroke: 1px white; /* White outline */
+  text-shadow: 0 0 5px white; /* Optional glow */
+}
+
+/* Using emoji star */
+.star-sparkle::before {
+  content: '⭐'; /* You can use ✨ or other symbols too */
+    color: navy;
+  display: block;
+}
+
+/* Fade-out animation */
+@keyframes star-fade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+img {
+    width: 12rem;
+    height: auto;
+    cursor: pointer;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+img:hover {
+    transform: scale(1.005);
+    transition: transform 0.3s ease-in-out;
+      /* Making the image change colour slightly */
+    filter: brightness(0.8);
+}
+
+.turtle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    color: var(--text-color);
+    font-size: 1rem;
+    padding: 0.5rem;
+    text-shadow: 2px 2px 4px var(--text-shadow);
+}
+
+/* KEYFRAMES */
+@keyframes animateBubble {
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: -15%;
+  }
+}
+@keyframes sideWays {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50px);
+  }
+}
+
+/* BUBBLES CONTAINER */
+#background-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* BUBBLE ANIMATIONS */
+.bubble {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2), inset 0px 10px 30px 5px var(--bubble-color);
+  width: 100px;
+  height: 100px;
+  opacity: 0.7;
+  background: radial-gradient(ellipse at center, rgba(178, 213, 238, 0.5) 0%,rgba(255,255,255,0) 70%);
+  animation: animateBubble 20s linear infinite, sideWays 3s ease-in-out infinite alternate;
+}
+
+/* Different bubble positions and speeds */
+.bubble.x1 { left: 0%;  animation-duration: 22s, 2s; width: 80px;  height: 80px; }
+.bubble.x2 { left: 20%; animation-duration: 18s, 4s; width: 60px;  height: 60px; }
+.bubble.x3 { left: 40%; animation-duration: 25s, 3s; width: 100px; height: 100px; }
+.bubble.x4 { left: 60%; animation-duration: 20s, 2.5s; width: 70px;  height: 70px; }
+.bubble.x5 { left: 80%; animation-duration: 28s, 4s; width: 90px;  height: 90px; }
+.bubble.x6 { left: 90%; animation-duration: 19s, 3s; width: 50px;  height: 50px; }
+.bubble.x7 { left: 100%; animation-duration: 24s, 2s; width: 60px;  height: 60px; }
+
+/* Optional: Bubble highlight */
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  top: 15%;
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  background: var(--bubble-highlight);
+  filter: blur(2px);
+  pointer-events: none;
+}
