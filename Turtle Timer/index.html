@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <title>Turtle Timer</title>
+</head>
+<body>
+    <div id="background-wrap">
+    <div class="bubble x1"></div>
+    <div class="bubble x2"></div>
+    <div class="bubble x3"></div>
+    <div class="bubble x4"></div>
+    <div class="bubble x5"></div>
+    <div class="bubble x6"></div>
+    <div class="bubble x7"></div>
+    <div class="bubble x8"></div>
+    <div class="bubble x9"></div>
+    <div class="bubble x10"></div>
+    </div>
+    <h1>Click on the turtle to set a timer.</h1>
+    <div class="popup">
+        <form action="">
+            <label for="minutes">Mins:</label>
+            <input type="number" id="time" name="time" min="1" max="60" required>
+            <label for="seconds">Secs:</label>
+            <input type="number" id="seconds" name="seconds" min="0" max="59" required>
+            <label for="repeat">How many times would you like the timer to repeat?</label>
+            <input type="number" id="repeat" name="repeat" min="1" max="10" value="1" required>
+            <button type="submit">Start Timer</button>
+            <p class="error-message" id="error-message"></p>
+        </form>
+    </div>
+    <div class="turtle">
+        <img src="/images/logo-no-bg.png" alt="Pixel art style image of turtle" id="turtle">
+    </div>
+</body>
+<script src="popup.js"></script>
+</html>
