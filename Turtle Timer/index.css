@@ -3,6 +3,8 @@
     --bubble-highlight: rgba(178, 213, 238, 0.5);
     --text-color: #e1ede5; /* Example text color */
     --text-shadow: rgba(0, 0, 0, 0.5);
+    --blue: #1e90ff;
+    --lightblue: #add8e6;
 }
 
 html {
@@ -32,7 +34,7 @@ body {
   color: navy;
   font-size: 16px;
   pointer-events: none;
-  animation: star-fade 0.7s ease-out;
+  animation: star-fade 0.9s ease-out;
   z-index: 9999;
   -webkit-text-stroke: 1px white; /* White outline */
   text-shadow: 0 0 5px white; /* Optional glow */
@@ -70,7 +72,7 @@ img:hover {
     transform: scale(1.005);
     transition: transform 0.3s ease-in-out;
       /* Making the image change colour slightly */
-    filter: brightness(0.8);
+    filter: brightness(0.5);
 }
 
 .turtle {
@@ -147,4 +149,95 @@ h1 {
   background: var(--bubble-highlight);
   filter: blur(2px);
   pointer-events: none;
+}
+
+.popup {
+  background: var(--lightblue);
+  padding: 3%;
+  font-size: 0.7em;
+  width: 75%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  visibility: hidden;
+  z-index: 1000;
+  align-content: start;
+  text-align: left;
+  margin-left: 2%;
+  transition: ease-in-out;
+  font-size: 0.8rem;
+     /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.open-popup {
+  visibility: visible;
+  top: 35%;
+  transform: translate(-50%, -50%) scale(1);
+  transition: ease-in-out;
+}
+
+input{
+  margin-bottom: 3%;
+  border-radius: 5px;
+  border: none;
+  background: rgba(255, 255, 255, 0.315);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+input:active, input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--blue);
+}
+
+button {
+  background: var(--blue);
+  color: var(--text-color);
+  font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: "Ubuntu", sans-serif;
+}
+
+button:hover {
+  background: var(--lightblue);
+  color: var(--blue);
+  transition: background-color 0.1s ease-in-out;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.timer {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 10px solid transparent;
+  background: conic-gradient(red 0%, green 0%); /* Initially empty */
+}
+
+#time-left-display {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  z-index: 1000000;
+  font-size: large;
+  text-align: center;
+  width: 100%;
+  color: var(--text-color);
+  text-shadow: 2px 2px 4px var(--text-shadow);
+  pointer-events: none;
+  color: var(--text-color);
 }
