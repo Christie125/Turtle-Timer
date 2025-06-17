@@ -23,20 +23,25 @@
     <div class="bubble x10"></div>
     </div>
     <h1>Click on the turtle to set a timer.</h1>
-    <div class="popup">
+    <div class="popup" id="popup">
         <form action="">
-            <label for="minutes">Mins:</label>
-            <input type="number" id="time" name="time" min="1" max="60" required>
-            <label for="seconds">Secs:</label>
-            <input type="number" id="seconds" name="seconds" min="0" max="59" required>
+            <label for="mins">Mins:</label>
+            <input type="number" id="mins" name="mins" min="1" max="60" required>
+            <br>
+            <label for="secs">Secs:</label>
+            <input type="number" id="secs" name="secs" min="0" max="59" required>
+            <br>
             <label for="repeat">How many times would you like the timer to repeat?</label>
             <input type="number" id="repeat" name="repeat" min="1" max="10" value="1" required>
-            <button type="submit">Start Timer</button>
+            <br>
+            <button type="submit" id="button">Start Timer</button>
             <p class="error-message" id="error-message"></p>
         </form>
     </div>
     <div class="turtle">
         <img src="/images/logo-no-bg.png" alt="Pixel art style image of turtle" id="turtle">
+    </div>
+    <div id="time-left-display">
     </div>
 </body>
 <script src="popup.js"></script>
