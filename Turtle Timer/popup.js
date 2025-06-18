@@ -7,15 +7,13 @@ document.addEventListener('mousemove', (e) => {
   star.className = 'star-sparkle';
   star.style.left = `${e.pageX}px`;
   star.style.top = `${e.pageY}px`;
-
-  // Optional: Add slight rotation or variation
   star.style.transform = `rotate(${Math.random() * 360}deg)`;
-
   document.body.appendChild(star);
 
+  // Removes the star after a short delay to make the trail shorter
   setTimeout(() => {
     star.remove();
-  }, 100); // Slightly longer than before
+  }, 100);
 });
 
 // Opens the timer popup when the turtle is clicked
@@ -33,9 +31,9 @@ const turtle = document.getElementById("turtle");
 turtle.addEventListener("click", () => {
   if (timerSet === true) {
     notification("Timer is already set. Please wait for it to finish before setting a new one.");
-    return; // Prevent opening the popup if timer is already set
+    return;
   }
-        openPopup();
+  openPopup();
 });
 
 const button = document.getElementById("button")
@@ -46,7 +44,7 @@ button.addEventListener("click", (event) => {
     event.preventDefault();
 });
 
-// Forever loop to alternate turtle images every second
+// Forever loop that alternates turtle images every second to make an animation
 let turtleAnimationInterval = null;
 
 function animateTurtle() {
@@ -68,18 +66,20 @@ function stopTurtleAnimation() {
   }
 }
 
+
+// Function to save timer data to localStorage and start the timer
 function saveTimerData() {
   if (timerSet === true) {
-    return; // Prevent setting the timer again if it's already set
+    return; 
   }
   const minutes = document.querySelector('#mins');
-  if (!minutes || minutes.value.trim() === "" || isNaN(Number(minutes.value)) || Number(minutes.value) < 0) {
-    notification("Please enter a valid number of minutes.");
+  if (!minutes || minutes.value.trim() === "" || isNaN(Number(minutes.value)) || Number(minutes.value) < 0 || Number(minutes.value) > 99999) {
+    notification("Please enter a valid number of minutes. Please do not make the number too large.");
   return;
 }
   const seconds = document.querySelector('#secs');
-  if (!seconds || seconds.value.trim() === "" || isNaN(Number(seconds.value)) || Number(seconds.value) < 0) {
-    notification("Please enter a valid number of seconds.");
+  if (!seconds || seconds.value.trim() === "" || isNaN(Number(seconds.value)) || Number(seconds.value) < 0 || Number(seconds.value) > 59) {
+    notification("Please enter a valid number of seconds. Please do not make the number too large.");
     return;
   }
   const totalTime = parseInt(minutes.value) * 60 + parseInt(seconds.value);
@@ -90,9 +90,8 @@ function saveTimerData() {
     repeatCount: parseInt(document.querySelector('#repeat').value) || 1
   }
 
-  // Save to localStorage
   localStorage.setItem('timerData', JSON.stringify(timerData));
-  timerSet = true; // Set the flag to true to prevent further setting
+  timerSet = true; 
 
   animateTurtle();
   setTimer();
@@ -105,7 +104,7 @@ function setTimer() {
     return;
   }
 
-  const duration = timerData.duration * 1000; // Convert to milliseconds
+  const duration = timerData.duration * 1000;
   const repeatCount = timerData.repeatCount;
 
   let currentRepeat = 0;
@@ -119,6 +118,7 @@ function setTimer() {
 
     setTimeout(() => {
       notification(`Timer is done!`);
+      playSound();
       currentRepeat++;
 
       if (currentRepeat < repeatCount) {
@@ -140,7 +140,7 @@ function setTimer() {
     let timeLeftDisplay = document.getElementById('time-left-display');
     if (timeLeftDisplay) {
       timeLeftDisplay.innerHTML = ""; // Clear old content
-      timeLeftDisplay.hidden = false; // Makes sure it's visible
+      timeLeftDisplay.hidden = false;
     }
   }
 
@@ -183,5 +183,15 @@ function notification(message) {
   const turtle = document.getElementById("turtle");
   setTimeout(() => {
     notification.remove();
-  }, 3000); // Remove after 3 seconds
+  }, 3000);
+}
+
+let audio = null;
+function playSound() {  
+  if (!audio) {
+    audio = new Audio('music.mp3');
+  }
+  audio.pause();
+  audio.currentTime = 0;
+  audio.play();
 }
