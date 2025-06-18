@@ -1,5 +1,7 @@
 let timerSet = false;
+let intervalId;
 
+// Styling the star sparkle mouse effect
 document.addEventListener('mousemove', (e) => {
   const star = document.createElement('div');
   star.className = 'star-sparkle';
@@ -16,6 +18,7 @@ document.addEventListener('mousemove', (e) => {
   }, 100); // Slightly longer than before
 });
 
+// Opens the timer popup when the turtle is clicked
 let popup = document.getElementById("popup");
 
 function openPopup() {
@@ -29,7 +32,7 @@ function closePopup() {
 const turtle = document.getElementById("turtle");
 turtle.addEventListener("click", () => {
   if (timerSet === true) {
-    alert("Timer is already set. Please wait for it to finish before setting a new one.");
+    notification("Timer is already set. Please wait for it to finish before setting a new one.");
     return; // Prevent opening the popup if timer is already set
   }
         openPopup();
@@ -43,7 +46,7 @@ button.addEventListener("click", (event) => {
     event.preventDefault();
 });
 
-// Forever loop to alternate turtle images every 1.5 seconds
+// Forever loop to alternate turtle images every second
 let turtleAnimationInterval = null;
 
 function animateTurtle() {
@@ -65,19 +68,18 @@ function stopTurtleAnimation() {
   }
 }
 
-
 function saveTimerData() {
   if (timerSet === true) {
     return; // Prevent setting the timer again if it's already set
   }
   const minutes = document.querySelector('#mins');
   if (!minutes || minutes.value.trim() === "" || isNaN(Number(minutes.value)) || Number(minutes.value) < 0) {
-    alert("Please enter a valid number of minutes.");
+    notification("Please enter a valid number of minutes.");
   return;
 }
   const seconds = document.querySelector('#secs');
   if (!seconds || seconds.value.trim() === "" || isNaN(Number(seconds.value)) || Number(seconds.value) < 0) {
-    alert("Please enter a valid number of seconds.");
+    notification("Please enter a valid number of seconds.");
     return;
   }
   const totalTime = parseInt(minutes.value) * 60 + parseInt(seconds.value);
@@ -99,7 +101,7 @@ function saveTimerData() {
 function setTimer() {
   const timerData = JSON.parse(localStorage.getItem('timerData'));
   if (!timerData) {
-    alert("No timer data found in localStorage.");
+    notification("No timer data found in localStorage.");
     return;
   }
 
@@ -109,42 +111,77 @@ function setTimer() {
   let currentRepeat = 0;
 
   function runTimer() {
+    const endTime = Date.now() + duration;
+    localStorage.setItem('timerData', JSON.stringify({ ...timerData, endTime }));
+
+    resetDisplay();
+    showHowMuchTimeLeft(endTime);
+
     setTimeout(() => {
-      alert("Timer is done!");
+      notification(`Timer is done!`);
       currentRepeat++;
+
       if (currentRepeat < repeatCount) {
         runTimer();
       } else {
         localStorage.removeItem('timerData');
+        if (intervalId) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+        document.getElementById('time-left-display').hidden = true;
         timerSet = false;
-        stopTurtleAnimation(); // Stop the turtle animation when done
+        stopTurtleAnimation();
       }
     }, duration);
   }
 
-  function showHowMuchTimeLeft() {
+  function resetDisplay() {
     let timeLeftDisplay = document.getElementById('time-left-display');
-    const timerData = JSON.parse(localStorage.getItem('timerData'));
-    if (!timerData) return;
+    if (timeLeftDisplay) {
+      timeLeftDisplay.innerHTML = ""; // Clear old content
+      timeLeftDisplay.hidden = false; // Makes sure it's visible
+    }
+  }
+
+  function showHowMuchTimeLeft(endTime) {
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
 
     function updateDisplay() {
       const now = Date.now();
-      const endTime = timerData.endTime;
       const timeLeft = Math.max(0, endTime - now);
       const minutesLeft = Math.floor(timeLeft / 60000);
       const secondsLeft = Math.floor((timeLeft % 60000) / 1000);
-      timeLeftDisplay.innerHTML = `Time left: ${minutesLeft} : ${secondsLeft}`;
+      const display = document.getElementById('time-left-display');
+      if (display) {
+        display.innerHTML = `Time left: ${minutesLeft} : ${secondsLeft}`;
+        display.hidden = false;
+      }
+
       if (timeLeft <= 0) {
         clearInterval(intervalId);
-        timeLeftDisplay.remove();
+        intervalId = null;
       }
     }
-    
-    const intervalId = setInterval(updateDisplay, 1000);
+
+    intervalId = setInterval(updateDisplay, 1000);
+    updateDisplay();
   }
 
   runTimer();
-  showHowMuchTimeLeft();
-
 }
 
+
+function notification(message) {
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  const turtle = document.getElementById("turtle");
+  setTimeout(() => {
+    notification.remove();
+  }, 3000); // Remove after 3 seconds
+}
