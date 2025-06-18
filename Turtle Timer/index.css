@@ -5,6 +5,7 @@
     --text-shadow: rgba(0, 0, 0, 0.5);
     --blue: #1e90ff;
     --lightblue: #add8e6;
+    --green: #1ba11b;
 }
 
 html {
@@ -87,6 +88,8 @@ h1 {
     font-size: 1rem;
     padding: 0.5rem;
     text-shadow: 2px 2px 4px var(--text-shadow);
+    background-color: var(--green);
+    padding: 0.5rem;
 }
 
 /* KEYFRAMES */
@@ -229,15 +232,31 @@ input[type=number]::-webkit-inner-spin-button {
 
 #time-left-display {
   position: absolute;
-  top: 70%;
+  top: 60%;
   left: 50%;
-  transform: translate(-50%, -60%);
+  transform: translate(-50%, -40%);
   z-index: 1000000;
   font-size: large;
   text-align: center;
-  width: 100%;
+  width: 80%;
   color: var(--text-color);
   text-shadow: 2px 2px 4px var(--text-shadow);
   pointer-events: none;
   color: var(--text-color);
+  background-color: var(--blue);
+}
+
+.notification {
+  position: fixed;
+  transform: translate(10%);
+  bottom: 1rem;
+  background-color: var(--green);
+  color: var(--text-color);
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 10000;
+  transition: opacity 0.3s ease-in-out;
+  text-align: center;
+  width: 75%;
 }
