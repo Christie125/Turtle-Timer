@@ -10,7 +10,7 @@
     <title>Turtle Timer</title>
 </head>
 <body>
-    <div id="background-wrap">
+    <div id="background-wrap" aria-hidden="true">
     <div class="bubble x1"></div>
     <div class="bubble x2"></div>
     <div class="bubble x3"></div>
@@ -38,7 +38,7 @@
             <p class="error-message" id="error-message"></p>
         </form>
     </div>
-    <div class="turtle">
+    <div class="turtle" role="button" aria-label="Turtle - click to set a timer">
         <img src="/images/logo-no-bg.png" alt="Pixel art style image of turtle" id="turtle">
     </div>
     <div id="time-left-display">
